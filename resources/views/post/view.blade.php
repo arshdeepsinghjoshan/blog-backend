@@ -1,4 +1,6 @@
 @extends('layouts.master')
+@section('title', 'Post View ' . (!empty($model->title) ? (strlen($model->title) > 20 ? substr($model->title, 0, 20) . '...' : $model->title) : 'N/A'))
+
 @section('content')
 <?php
 
@@ -10,10 +12,10 @@ use App\Models\User;
             'label' => 'Home',
         ],
         [
-             'url' => 'product',
-            'label' => 'Product',
+             'url' => 'post',
+            'label' => 'Posts',
         ],
-        !empty($model->name) ? (strlen($model->name) > 100 ? substr($model->name, 0, 100) . '...' : $model->name) : 'N/A'
+        !empty($model->title) ? (strlen($model->title) > 100 ? substr($model->title, 0, 100) . '...' : $model->title) : 'N/A'
     ]" />
 
 <div class="container-xxl flex-grow-1 container-p-y">
@@ -21,17 +23,22 @@ use App\Models\User;
         <div class="col-lg-12 mb-4 order-0">
             <div class="card">
                 <div class="card-body">
-                    <h5>{{ !empty($model->name) ? (strlen($model->name) > 100 ? substr($model->name, 0, 100) . '...' : $model->name) : 'N/A' }}
+                    <h5>{{ !empty($model->title) ? (strlen($model->title) > 100 ? substr($model->title, 0, 100) . '...' : $model->title) : 'N/A' }}
                         <span class="{{ $model->getStateBadgeOption() }}">{{ $model->getState() }}</span>
                     </h5>
 
                     <x-a-detail-view :model="$model" :type="'single'" :column="
     [
         'id',
-      'name',
-      'price',
-      'quantity_in_stock',
-      'remaining_quantity',
+      'title',
+      'slug',
+      
+    [
+        'attribute' => 'category',
+        'value' => (empty($model->category)) ? 'N/A' : $model->category->name,
+     ],
+      'content',
+
      [
         'attribute' => 'created_at',
         'label' => 'Created at',
@@ -62,7 +69,7 @@ use App\Models\User;
                         <div class="preview-images" style="display: flex; overflow-x: auto; gap: 10px;">
                             @foreach(json_decode($model->images) as $image)
                             <div class="preview-image">
-                                <img class="zoom-image" src="{{ asset('/products/'.$image) }}" data-id="{{$image}}" alt="" width="80px" height="100px">
+                                <img class="zoom-image" src="{{ asset('/post/'.$image) }}" data-id="{{$image}}" alt="" width="80px" height="100px">
                             </div>
                             @endforeach
                         </div>

@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'wallet Index')
+@section('title', 'Post Index')
 
 @section('content')
 
@@ -11,21 +11,21 @@
             'label' => 'Home',
         ],
         [
-            'url' => 'product',
-            'label' => 'Product',
+            'url' => 'post',
+            'label' => 'Posts',
         ],
     ]" />
 
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row">
-        <div class="col-lg-12 mb-4 order-0">
+        <!-- <div class="col-lg-12 mb-4 order-0">
 
             <div class="card">
                 <div class="card-header">
                     <h3>{{ __('Import') }}</h3>
                 </div>
                 <div class="card-body">
-                    <form id="blog-category-form" class="row needs-validation justify-content-center" Action="{{ route('product.import')}}" method="post" novalidate enctype="multipart/form-data">
+                    <form id="blog-category-form" class="row needs-validation justify-content-center" Action="{{ route('post.import')}}" method="post" novalidate enctype="multipart/form-data">
                         @csrf
                         <div class="col-md-6">
                             <div class="d-md-flex align-items-start">
@@ -43,19 +43,18 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="col-lg-12 mb-4 order-0">
             <div class="card">
                 <h5 class="card-header">{{ __('Index') }}</h5>
                 <div class="card-body">
                     <x-a-update-menu-items :model="$model" :action="'index'" />
                     <div class="table-responsive">
-                        <x-a-grid-view :id="'product_table'" :model="$model" :url="'product/get-list/'" :columns="[
+                        <x-a-grid-view :id="'post_table'" :model="$model" :url="'post/get-list/'" :columns="[
                                 'id',
-                                 'name',
-                                 'price',
-                                 'quantity_in_stock',
-                                 'remaining_quantity',
+                                 'title',
+                                 'content',
+                                 'category',
                                  'status',
                                 [
                                  'attribute'=> 'created_at',

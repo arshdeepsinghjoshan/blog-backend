@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_categories', function (Blueprint $table) {
+        Schema::create('post_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name', 128)->nullable();
             $table->string('slug', 128)->nullable();
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('created_by_id');
             $table->timestamps();
         });
-        Schema::table('product_categories', function (Blueprint $table) {
+        Schema::table('post_categories', function (Blueprint $table) {
             $table->index('name');
             $table->index('created_by_id');
         });
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_categories');
+        Schema::dropIfExists('post_categories');
     }
 };

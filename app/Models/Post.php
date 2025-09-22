@@ -6,7 +6,7 @@ use App\Traits\AActiveRecord;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Post extends Model
 {
     use HasFactory;
 
@@ -56,7 +56,7 @@ class Product extends Model
     {
         return [
             self::TYPE_GRIND => "Grind",
-            self::TYPE_PRODUCT => "Product",
+            self::TYPE_PRODUCT => "Post",
         ];
     }
     public function getType()
@@ -120,18 +120,24 @@ class Product extends Model
 
     public function getCategoryOption()
     {
-        return ProductCategory::where('state_id', ProductCategory::STATE_ACTIVE)->get();
+        return PostCategory::where('state_id', PostCategory::STATE_ACTIVE)->get();
     }
 
 
-    public function createdBy()
+    public function category()
+    {
+        return $this->belongsTo(PostCategory::class);
+    }
+
+        public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by_id');
     }
 
+
     public function getCategory()
     {
-        return $this->belongsTo(ProductCategory::class, 'category_id');
+        return $this->belongsTo(PostCategory::class, 'category_id');
     }
 
 
@@ -145,14 +151,14 @@ class Product extends Model
                     'label' => 'fa fa-step-backward',
                     'color' => 'btn btn-primary',
                     'title' => __('Manage'),
-                    'url' => url('product'),
+                    'url' => url('post'),
 
                 ];
                 $menu['update'] = [
                     'label' => 'fa fa-edit',
                     'color' => 'btn btn-primary',
                     'title' => __('Update'),
-                    'url' => url('product/edit/' . $model->id),
+                    'url' => url('post/edit/' . $model->id),
 
                 ];
                 break;
@@ -161,14 +167,14 @@ class Product extends Model
                     'label' => 'fa fa-plus',
                     'color' => 'btn btn-primary',
                     'title' => __('Add'),
-                    'url' => url('product/create'),
+                    'url' => url('post/create'),
                     'visible' => User::isAdmin()
                 ];
                 $menu['import'] = [
                     'label' => 'fas fa-file-import',
                     'color' => 'btn btn-primary',
                     'title' => __('File Import'),
-                    'url' => url('product/import'),
+                    'url' => url('post/import'),
                     'visible' => false
                 ];
         }

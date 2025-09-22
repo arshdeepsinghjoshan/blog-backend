@@ -1,4 +1,4 @@
-<form id="blog-category-form" class="row needs-validation justify-content-center" action="{{ route('productCategory.update',$model->id)}}" method="post" novalidate>
+<form id="blog-category-form" class="row needs-validation justify-content-center" action="{{ route('postCategory.update',$model->id)}}" method="post" novalidate>
     @csrf
     <div class="col-md-6">
         <div class="d-md-flex align-items-start">

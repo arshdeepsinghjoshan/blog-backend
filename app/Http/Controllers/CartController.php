@@ -382,7 +382,7 @@ class CartController extends Controller
             $model  = new Cart();
             if ($model) {
 
-                return view('product.add', compact('model'));
+                return view('post.add', compact('model'));
             } else {
                 return redirect('404');
             }

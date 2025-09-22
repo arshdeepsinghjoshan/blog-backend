@@ -6,8 +6,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstallmentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
-use App\Http\Controllers\ProductCategoryController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PostCategoryController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SubscribedPlanController;
 use App\Http\Controllers\SubscriptionPlanController;
@@ -16,7 +16,7 @@ use App\Http\Controllers\SupportDepartmentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WalletTransactionController;
-use App\Models\ProductCategory;
+use App\Models\PostCategory;
 use App\Models\SubscriptionPlan;
 use Illuminate\Support\Facades\Route;
 
@@ -128,24 +128,24 @@ Route::group(['middleware' => ['prevent-back-history', 'admin']], function () {
 
 
 
-        Route::get('product/category', [ProductCategoryController::class, 'index']);
-        Route::post('product/category/add', [ProductCategoryController::class, 'store'])->name('productCategory.add');
-        Route::get('/product/category/get-list', [ProductCategoryController::class, 'getDepartmenttList']);
-        Route::get('/product/category/edit/{id}', [ProductCategoryController::class, 'edit']);
-        Route::get('/product/category/view/{id}', [ProductCategoryController::class, 'view']);
-        Route::post('product/category/update/{id}', [ProductCategoryController::class, 'update'])->name('productCategory.update');
-        Route::get('/product/category/stateChange/{id}/{state_id}', [ProductCategoryController::class, 'stateChange']);
-        Route::get('/product/category/delete/{id}', [ProductCategoryController::class, 'finalDelete']);
+        Route::get('post/category', [PostCategoryController::class, 'index']);
+        Route::post('post/category/add', [PostCategoryController::class, 'store'])->name('postCategory.add');
+        Route::get('/post/category/get-list', [PostCategoryController::class, 'getDepartmenttList']);
+        Route::get('/post/category/edit/{id}', [PostCategoryController::class, 'edit']);
+        Route::get('/post/category/view/{id}', [PostCategoryController::class, 'view']);
+        Route::post('post/category/update/{id}', [PostCategoryController::class, 'update'])->name('postCategory.update');
+        Route::get('/post/category/stateChange/{id}/{state_id}', [PostCategoryController::class, 'stateChange']);
+        Route::get('/post/category/delete/{id}', [PostCategoryController::class, 'finalDelete']);
 
 
-        Route::get('product', [ProductController::class, 'index']);
-        Route::get('product/create', [ProductController::class, 'create']);
-        Route::post('product/import', [ProductController::class, 'import'])->name('product.import');
-        Route::post('product/add', [ProductController::class, 'add'])->name('product.add');
-        Route::get('/product/get-list', [ProductController::class, 'getList']);
-        Route::get('/product/edit/{id}', [ProductController::class, 'edit']);
-        Route::get('/product/view/{id}', [ProductController::class, 'view']);
-        Route::post('product/update', [ProductController::class, 'update'])->name('product.update');
+        Route::get('post', [PostController::class, 'index']);
+        Route::get('/post/create', [PostController::class, 'create']);
+        Route::post('/post/import', [PostController::class, 'import'])->name('post.import');
+        Route::post('/post/add', [PostController::class, 'add'])->name('post.add');
+        Route::get('/post/get-list', [PostController::class, 'getList']);
+        Route::get('/post/edit/{id}', [PostController::class, 'edit']);
+        Route::get('/post/view/{id}', [PostController::class, 'view']);
+        Route::post('post/update', [PostController::class, 'update'])->name('post.update');
 
 
 
@@ -181,7 +181,7 @@ Route::group(['middleware' => ['prevent-back-history', 'admin']], function () {
         Route::post('cart/delete-cart-item', [CartController::class, 'deleteCartItem']);
         Route::post('cart/update-grind-price', [CartController::class, 'updateGrindPrice']);
 
-        Route::post('cart/custom-product', [CartController::class, 'customProduct']);
+        Route::post('cart/custom-post', [CartController::class, 'customPost']);
 
         Route::post('installment/store', [InstallmentController::class, 'store']);
         Route::get('installment', [InstallmentController::class, 'index']);

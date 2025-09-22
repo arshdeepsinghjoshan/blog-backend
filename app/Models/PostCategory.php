@@ -6,7 +6,7 @@ use App\Traits\AActiveRecord;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductCategory extends Model
+class PostCategory extends Model
 {
     const STATE_INACTIVE = 0;
 
@@ -84,14 +84,14 @@ class ProductCategory extends Model
                     'label' => 'fa fa-step-backward',
                     'color' => 'btn btn-primary',
                     'title' => __('Manage'),
-                    'url' => url('product/category'),
+                    'url' => url('post/category'),
                     'visible' => true
                 ];
                 $menu['delete'] = [
                     'label' => 'fa fa-trash',
                     'color' => 'btn btn-danger',
                     'title' => __('Add'),
-                    'url' =>  url('product/category/delete/' . $model->id),
+                    'url' =>  url('post/category/delete/' . $model->id),
                     'visible' => true
                 ];
                 break;
@@ -101,7 +101,7 @@ class ProductCategory extends Model
                     'label' => 'fa fa-plus',
                     'color' => 'btn btn-icon btn-primary',
                     'title' => __('Add'),
-                    'url' => url('product/category/create'),
+                    'url' => url('post/category/create'),
                     'visible' => false
                 ];
                 break;

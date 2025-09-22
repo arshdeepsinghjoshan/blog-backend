@@ -1,4 +1,6 @@
 @extends('layouts.master')
+@section('title', 'Post update ' . (!empty($model->title) ? (strlen($model->title) > 20 ? substr($model->title, 0, 20) . '...' : $model->title) : 'N/A'))
+
 @section('content')
 <x-a-breadcrumb :columns="[
         [
@@ -6,10 +8,12 @@
             'label' => 'Home',
         ],
         [
-            'url' => 'product/category',
-            'label' => 'Product Category',
+             'url' => 'post',
+            'label' => 'Post',
         ],
+         $model->title ? (strlen($model->title) > 20 ? substr($model->title, 0, 20) . '...' : $model->title) : 'N/A'
     ]" />
+
 
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row">
@@ -25,7 +29,8 @@
                     </h3>
                 </div>
                 <div class="card-body">
-                    @include('category.department._form')
+                    @include('post._form')
+
                 </div>
             </div>
         </div>

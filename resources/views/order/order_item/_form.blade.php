@@ -1,4 +1,4 @@
-<form action="{{ route('product.add') }}" method="post" id="product-update" enctype="multipart/form-data">
+<form action="{{ route('post.add') }}" method="post" id="product-update" enctype="multipart/form-data">
     @csrf
     <div class="row align-items-starts">
         <div class="col-xl-4 col-lg-4 col-md-6 col-12">

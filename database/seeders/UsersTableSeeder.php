@@ -30,13 +30,12 @@ class UsersTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'admin',
-            'email' => 'admin@lbm.in',
+            'email' => 'admin@ask.in',
             'password' => Hash::make('Admin@123'),
             'referral_id' => 'JJOF1714714247',
             'state_id' => User::STATE_ACTIVE,
             'role_id' => User::ROLE_ADMIN,
             'created_by_id' => User::ROLE_ADMIN,
-            'referrad_code' => User::ROLE_ADMIN
         ]);
 
         DB::table('wallets')->insert([

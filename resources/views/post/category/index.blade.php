@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'wallet Index')
+@section('title', 'Post Category')
 
 @section('content')
 
@@ -25,7 +25,7 @@
                     <h3>{{ __('Add') }}</h3>
                 </div>
                 <div class="card-body">
-                    <form id="blog-category-form" class="row needs-validation justify-content-center" Action="{{ route('productCategory.add')}}" method="post" novalidate>
+                    <form id="blog-category-form" class="row needs-validation justify-content-center" Action="{{ route('postCategory.add')}}" method="post" novalidate>
                         @csrf
                         <div class="col-md-6">
                             <div class="d-md-flex align-items-start">
@@ -50,7 +50,7 @@
                 <div class="card-body">
                     <x-a-update-menu-items :model="$model" :action="'index'" />
                     <div class="table-responsive">
-                        <x-a-grid-view :id="'product_category_table'" :model="$model" :url="'product/category/get-list/'" :columns="[
+                        <x-a-grid-view :id="'post_category_table'" :model="$model" :url="'post/category/get-list/'" :columns="[
                                 'id',
                                 'name',
                                 'status',

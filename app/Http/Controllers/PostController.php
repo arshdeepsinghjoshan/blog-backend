@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Department;
-use App\Models\Product;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -12,19 +12,20 @@ use Illuminate\Support\Str;
 use DataTables;
 use Illuminate\Validation\Rule;
 
-class ProductController extends Controller
+class PostController extends Controller
 {
     public $setFilteredRecords = 0;
 
-    public function index()
-    {
-        try {
-            $model = new Product();
-            return view('product.index', compact('model'));
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
-        }
+ public function index()
+{
+    try {
+        $model = new Post();
+        return view('post.index', compact('model'));
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
     }
+}
+
     public function import(Request $request)
     {
         try {
@@ -84,14 +85,14 @@ class ProductController extends Controller
                 }
 
                 // Insert into database
-                Product::insert($productsToInsert);
+                Post::insert($productsToInsert);
 
-                return redirect()->back()->with('success', 'File imported successfully! Products added: ' . count($productsToInsert));
+                return redirect()->back()->with('success', 'File imported successfully! Posts added: ' . count($productsToInsert));
             }
 
             // For GET request
-            $model = new Product();
-            return view('product.import', compact('model'));
+            $model = new Post();
+            return view('post.import', compact('model'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
@@ -102,12 +103,12 @@ class ProductController extends Controller
     {
         try {
             $id = $request->id;
-            $model  = Product::find($id);
+            $model  = Post::find($id);
             if ($model) {
 
-                return view('product.update', compact('model'));
+                return view('post.update', compact('model'));
             } else {
-                return redirect()->back()->with('error', 'Product not found');
+                return redirect()->back()->with('error', 'Post not found');
             }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
@@ -120,10 +121,10 @@ class ProductController extends Controller
     {
         try {
 
-            $model  = new Product();
+            $model  = new Post();
             if ($model) {
 
-                return view('product.add', compact('model'));
+                return view('post.add', compact('model'));
             } else {
                 return redirect('404');
             }
@@ -135,15 +136,15 @@ class ProductController extends Controller
     {
         try {
             $id = $request->id;
-            $model  = Product::find($id);
+            $model  = Post::find($id);
             if ($model) {
 
-                return view('product.view', compact('model'));
+                return view('post.view', compact('model'));
             } else {
-                return redirect('/product')->with('error', 'Product not found');
+                return redirect('/post')->with('error', 'Post not found');
             }
         } catch (\Exception $e) {
-            return redirect('/product')->with('error', 'An error occurred: ' . $e->getMessage());
+            return redirect('/post')->with('error', 'An error occurred: ' . $e->getMessage());
         }
     }
 
@@ -155,9 +156,9 @@ class ProductController extends Controller
             return redirect()->back()->withInput()->with('error', $message);
         }
         try {
-            $model = Product::find($request->id);
+            $model = Post::find($request->id);
             if (!$model) {
-                return redirect()->back()->with('error', 'Product not found');
+                return redirect()->back()->with('error', 'Post not found');
             }
             $all_images = null;
 
@@ -177,9 +178,9 @@ class ProductController extends Controller
             $model->fill($request->all());
             $model->image = $all_images;
             if ($model->save()) {
-                return redirect()->back()->with('success', 'Product updated successfully!');
+                return redirect()->back()->with('success', 'Post updated successfully!');
             } else {
-                return redirect()->back()->with('error', 'Product not updated');
+                return redirect()->back()->with('error', 'Post not updated');
             }
         } catch (\Exception $e) {
             $bug = $e->getMessage();
@@ -195,9 +196,9 @@ class ProductController extends Controller
     public function getList(Request $request, $id = null)
     {
         if (User::isUser()) {
-            $query = Product::my()->orderBy('id', 'desc');
+            $query = Post::my()->orderBy('id', 'desc');
         } else {
-            $query = Product::orderBy('id', 'desc');
+            $query = Post::orderBy('id', 'desc');
         }
 
         if (!empty($id))
@@ -220,11 +221,18 @@ class ProductController extends Controller
             ->addColumn('title', function ($data) {
                 return !empty($data->title) ? (strlen($data->title) > 60 ? substr(ucfirst($data->title), 0, 60) . '...' : ucfirst($data->title)) : 'N/A';
             })
+
+            ->addColumn('content', function ($data) {
+                return !empty($data->content) ? (strlen($data->content) > 60 ? substr(ucfirst($data->content), 0, 60) . '...' : ucfirst($data->content)) : 'N/A';
+            })
             ->addColumn('price', function ($data) {
                 return number_format($data->price, 2);
             })
             ->addColumn('status', function ($data) {
                 return '<span class="' . $data->getStateBadgeOption() . '">' . $data->getState() . '</span>';
+            })
+            ->addColumn('category', function ($data) {
+                return !empty($data->category && $data->category->name) ? $data->category->name : 'N/A';
             })
             ->rawColumns(['created_by'])
 
@@ -232,7 +240,7 @@ class ProductController extends Controller
                 return (empty($data->created_at)) ? 'N/A' : date('Y-m-d', strtotime($data->created_at));
             })
             ->addColumn('status', function ($data) {
-                $select = '<select class="form-select state-change"  data-id="' . $data->id . '" data-modeltype="' . Product::class . '" aria-label="Default select example">';
+                $select = '<select class="form-select state-change"  data-id="' . $data->id . '" data-modeltype="' . Post::class . '" aria-label="Default select example">';
                 foreach ($data->getStateOptions() as $key => $option) {
                     $select .= '<option value="' . $key . '"' . ($data->state_id == $key ? ' selected' : '') . '>' . $option . '</option>';
                 }
@@ -242,9 +250,9 @@ class ProductController extends Controller
 
             ->addColumn('action', function ($data) {
                 $html = '<div class="table-actions text-center">';
-                $html .=    '  <a class="btn btn-icon btn-primary mt-1" href="' . url('product/view/' . $data->id) . '"  ><i class="fa fa-eye
+                $html .=    '  <a class="btn btn-icon btn-primary mt-1" href="' . url('post/view/' . $data->id) . '"  ><i class="fa fa-eye
                 "data-toggle="tooltip"  title="View"></i></a>';
-                $html .= ' <a class="btn btn-icon btn-primary mt-1" href="' . url('product/edit/' . $data->id) . '" ><i class="fa fa-edit"></i></a>';
+                $html .= ' <a class="btn btn-icon btn-primary mt-1" href="' . url('post/edit/' . $data->id) . '" ><i class="fa fa-edit"></i></a>';
                 $html .=  '</div>';
                 return $html;
             })->addColumn('customerClickAble', function ($data) {
@@ -268,10 +276,8 @@ class ProductController extends Controller
                     $query->where(function ($q) use ($searchTerms) {
                         foreach ($searchTerms as $term) {
                             $q->where('id', 'like', "%$term%")
-                                ->orWhere('name', 'like', "%$term%")
-                                ->orWhere('price', 'like', "%$term%")
-                                ->orWhere('quantity_in_stock', 'like', "%$term%")
-                                ->orWhere('remaining_quantity', 'like', "%$term%")
+                                ->orWhere('title', 'like', "%$term%")
+                                ->orWhere('content', 'like', "%$term%")
                                 ->orWhere('created_at', 'like', "%$term%")
                                 ->orWhere(function ($query) use ($term) {
                                     $query->searchState($term);
@@ -301,10 +307,9 @@ class ProductController extends Controller
         return Validator::make(
             $data,
             [
-                'name' => 'required|string|max:255',
-                'price' => 'required',
-                'description' => 'string|max:255',
-                'remaining_quantity' => ['integer', 'max:' . $data['quantity_in_stock']],
+                'title' => 'required|string|max:255',
+                'category_id' => 'required',
+                'content' => 'string|max:5000'
             ]
         );
     }
@@ -327,27 +332,29 @@ class ProductController extends Controller
                 foreach ($ticket_images as $image) {
                     if ($image->isValid()) {
                         $imageName = rand(1, 100000) . time() . '_' . $image->getClientOriginalName();
-                        $image->move(public_path('products'), $imageName);
+                        $image->move(public_path('post'), $imageName);
                         $all_images[] = $imageName;
                     }
                 }
             }
 
             // Create a new product model
-            $model = new Product();
+            $model = new Post();
             $model->fill($request->all());
-            $model->state_id = Product::STATE_ACTIVE;
+            $model->state_id = Post::STATE_ACTIVE;
             $model->images = !empty($all_images) ? json_encode($all_images) : null;  // Ensure it's a JSON string
             $model->created_by_id = Auth::user()->id;
-
+            $model->slug = Str::slug($request->title, '-');
             // Save the model
             if ($model->save()) {
-                return redirect('/product')->with('success', 'Product created successfully!');
+                // return redirect('post')->with('success', 'Post created successfully!');
+                return redirect(url('post'))->with('success', 'Post created successfully!');
             } else {
-                return redirect('/product/create')->with('error', 'Unable to save the Product!');
+                return redirect('/post/create')->with('error', 'Unable to save the Post!');
             }
         } catch (\Exception $e) {
             $bug = $e->getMessage();
+            dd($bug);
             return redirect()->back()->withInput()->with('error', $bug);
         }
     }
@@ -357,12 +364,12 @@ class ProductController extends Controller
     public function stateChange($id, $state)
     {
         try {
-            $model = Product::find($id);
+            $model = Post::find($id);
             if ($model) {
                 $update = $model->update([
                     'state_id' => $state,
                 ]);
-                return redirect()->back()->with('success', 'Product has been ' . (($model->getState() != "New") ? $model->getState() . 'd!' : $model->getState()));
+                return redirect()->back()->with('success', 'Post has been ' . (($model->getState() != "New") ? $model->getState() . 'd!' : $model->getState()));
             } else {
                 return redirect('404');
             }
@@ -375,10 +382,10 @@ class ProductController extends Controller
     public function finalDelete($id)
     {
         try {
-            $model = Product::find($id);
+            $model = Post::find($id);
             if ($model) {
                 $model->delete();
-                return redirect('support')->with('success', 'Product has been deleted successfully!');
+                return redirect('support')->with('success', 'Post has been deleted successfully!');
             } else {
                 return redirect('404');
             }

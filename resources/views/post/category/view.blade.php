@@ -10,8 +10,8 @@ use App\Models\User;
             'label' => 'Home',
         ],
         [
-            'url' => 'product/category',
-            'label' => 'Product Category',
+            'url' => 'post/category',
+            'label' => 'Post Category',
         ],
         $model->name,
     ]" />

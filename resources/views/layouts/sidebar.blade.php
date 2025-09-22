@@ -32,25 +32,25 @@ $segment2 = request()->segment(2);
         @if (User::isAdmin())
         <!--Wallet Managment -->
         {{-- <li class="menu-item {{ $segment1 != 'wallet' ? '' : 'active open' }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Wallet Management">Wallet Management</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ $segment1 == 'wallet' && $segment2 != 'wallet-transaction' ? 'active' : '' }}">
-                    <a href="{{ url('wallet') }}" class="menu-link">
-                        <div data-i18n="Account">Wallets</div>
-                    </a>
-                </li>
-            </ul>
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+            <div data-i18n="Wallet Management">Wallet Management</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item {{ $segment1 == 'wallet' && $segment2 != 'wallet-transaction' ? 'active' : '' }}">
+                <a href="{{ url('wallet') }}" class="menu-link">
+                    <div data-i18n="Account">Wallets</div>
+                </a>
+            </li>
+        </ul>
 
-            <ul class="menu-sub">
-                <li class="menu-item {{ $segment1 == 'wallet' && $segment2 == 'wallet-transaction' ? 'active' : '' }}">
-                    <a href="{{ url('wallet/wallet-transaction') }}" class="menu-link">
-                        <div data-i18n="Account">Wallet Transactions</div>
-                    </a>
-                </li>
-            </ul>
+        <ul class="menu-sub">
+            <li class="menu-item {{ $segment1 == 'wallet' && $segment2 == 'wallet-transaction' ? 'active' : '' }}">
+                <a href="{{ url('wallet/wallet-transaction') }}" class="menu-link">
+                    <div data-i18n="Account">Wallet Transactions</div>
+                </a>
+            </li>
+        </ul>
         </li> --}}
         <!--End Wallet Managment -->
 
@@ -89,26 +89,20 @@ $segment2 = request()->segment(2);
 
 
 
-        <li class="menu-header small text-uppercase"><span class="menu-header-text">Product Management</span></li>
-    
-        <li class="menu-item {{ $segment1 == 'product' && $segment2 != 'category' ? 'active' : '' }}">
-            <a href="{{ url('product') }}" class="menu-link">
+        <li class="menu-header small text-uppercase"><span class="menu-header-text">Post Management</span></li>
+        <li class="menu-item {{ $segment1 == 'post' && $segment2 == 'category' ? 'active' : '' }}">
+            <a href="{{ url('post/category') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Post Category</div>
+            </a>
+        </li>
+        <li class="menu-item {{ $segment1 == 'post' && $segment2 != 'category' ? 'active' : '' }}">
+            <a href="{{ url('post') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-file"></i>
-                <div data-i18n="Basic">Products</div>
+                <div data-i18n="Basic">Posts</div>
             </a>
         </li>
 
-        <li class="menu-header small text-uppercase"><span class="menu-header-text">Order Management</span></li>
-        @if (User::isAdmin())
-        <!-- Order Managment -->
-        <li class="menu-item {{ $segment1 == 'order' && $segment2 != 'category' ? 'active' : '' }}">
-            <a href="{{ url('order') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Orders</div>
-            </a>
-        </li>
-        @endif
-        
 
         <!-- <li class="menu-header small text-uppercase"><span class="menu-header-text">Support Management</span></li> -->
         <!-- @if (User::isAdmin()) -->

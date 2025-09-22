@@ -1,4 +1,6 @@
 @extends('layouts.master')
+@section('title', 'Post')
+
 @section('content')
     <x-a-breadcrumb :columns="[
         [
@@ -6,12 +8,10 @@
             'label' => 'Home',
         ],
         [
-            'url' => 'product/category',
-            'label' => 'Product Category',
+            'url' => 'post',
+            'label' => 'Post',
         ],
-         $model->name,
     ]" />
-
 
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row">
@@ -27,9 +27,7 @@
                         </h3>
                     </div>
                     <div class="card-body">
-                    @include('product.category._form')
-
-
+                    @include('post._form')
                     </div>
                 </div>
             </div>

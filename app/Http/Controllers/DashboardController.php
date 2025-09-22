@@ -34,14 +34,17 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // Session::flash('error', 'This is a messageThis is a messageThis is a messageThis is a messageThis is a messageThis is a messageThis is a messageThis is a messageThis is a messageThis is a messageThis is a messageThis is a messageThis is a messageThis is a messageThis is a messageThis is a messageThis is a messageThis is a message!'); 
-        return view('dashboard.index');
+        $totalPosts = \DB::table('posts')->count();
+        $publishedPosts = \DB::table('posts')->count();
+        $draftPosts = \DB::table('posts')->whereNull('published_at')->count();
+        $totalCategories = \DB::table('post_categories')->count();
+        return view('dashboard.index', compact('totalPosts', 'publishedPosts', 'draftPosts','totalCategories'));
     }
 
     public function getChartData()
     {
-       
-        $customersData = User::Where(['role_id'=> User::ROLE_USER])->pluck('id')->toArray();
+
+        $customersData = User::Where(['role_id' => User::ROLE_USER])->pluck('id')->toArray();
 
         $chartData = [
             'customers' => $customersData,
