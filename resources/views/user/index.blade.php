@@ -26,7 +26,7 @@
                                 'id',
                                 'name',
                                 'contact_no',
-                                'father_name',
+                                'email',
                                 'created_at',
                                 'status',
                                 'created_by',

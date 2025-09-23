@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\AActiveRecord;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use DataTables;
 
 class Post extends Model
 {
@@ -180,7 +181,69 @@ class Post extends Model
         }
         return $menu;
     }
+ public function relationGridView($queryRelation, $request)
+    {
+        $dataTable = Datatables::of($queryRelation)
+            ->addIndexColumn()
 
+            ->addColumn('created_by', function ($data) {
+                return !empty($data->createdBy && $data->createdBy->name) ? $data->createdBy->name : 'N/A';
+            })
+            ->addColumn('title', function ($data) {
+                return !empty($data->title) ? (strlen($data->title) > 60 ? substr(ucfirst($data->title), 0, 60) . '...' : ucfirst($data->title)) : 'N/A';
+            })
+           ->addColumn('category', function ($data) {
+                return !empty($data->category && $data->category->name) ? $data->category->name : 'N/A';
+            })
+            ->addColumn('status', function ($data) {
+                return '<span class="' . $data->getStateBadgeOption() . '">' . $data->getState() . '</span>';
+            })
+            ->rawColumns(['created_by'])
+
+            ->addColumn('created_at', function ($data) {
+                return (empty($data->created_at)) ? 'N/A' : date('Y-m-d', strtotime($data->created_at));
+            })
+            ->addColumn('action', function ($data) {
+                $html = '<div class="table-actions text-center">';
+                $html .= ' <a class="btn btn-icon btn-primary mt-1" href="' . url('user/edit/' . $data->id) . '" ><i class="fa fa-edit"></i></a>';
+                $html .=    '  <a class="btn btn-icon btn-primary mt-1" href="' . url('user/view/' . $data->id) . '"  ><i class="fa fa-eye
+                "data-toggle="tooltip"  title="View"></i></a>';
+                $html .=  '</div>';
+                return $html;
+            })->addColumn('customerClickAble', function ($data) {
+                $html = 0;
+
+                return $html;
+            })
+            ->rawColumns([
+                'action',
+                'created_at',
+                'status',
+                'customerClickAble'
+            ]);
+        if (!($queryRelation instanceof \Illuminate\Database\Query\Builder)) {
+            $searchValue = $request->input('search.value');
+            if ($searchValue) {
+                $searchTerms = explode(' ', $searchValue);
+                $collection = $queryRelation->filter(function ($item) use ($searchTerms) {
+                    foreach ($searchTerms as $term) {
+                        if (
+                            strpos($item->id, $term) !== false ||
+                            strpos($item->title, $term) !== false ||
+                            strpos($item->created_at, $term) !== false ||
+                            (isset($item->createdBy) && strpos($item->createdBy->name, $term) !== false) ||
+                            $item->searchState($term)
+                        ) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+            }
+        }
+
+        return $dataTable->make(true);
+    }
 
 
     public function scopeSearchState($query, $search)

@@ -56,11 +56,7 @@ use App\Models\User;
                                         'visible' => true,
                                     ],
                                     
-                                      [
-                                        'attribute' => 'Pending_amount',
-                                        'value' => number_format($model->pendingPayment(),2),
-                                        'visible' => true,
-                                    ],
+                                     
                                     [
                                         'attribute' => 'email_verified',
                                         'label' => 'Email Verified',
@@ -115,14 +111,14 @@ use App\Models\User;
 
                     <li class="nav-item">
                         <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-order" aria-controls="navs-justified-messages" aria-selected="false">
-                            <i class="tf-icons bx bx-message-square"></i> Orders
+                            <i class="tf-icons bx bx-message-square"></i> Post
                         </button>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-wallet-history" aria-controls="navs-justified-messages" aria-selected="false">
                             <i class="tf-icons bx bx-message-square"></i> Wallet Transaction
                         </button>
-                    </li>
+                    </li> -->
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane show active" id="navs-justified-order" role="tabpanel">
@@ -130,16 +126,14 @@ use App\Models\User;
 
 
 
-                            <x-a-relation-grid :id="'order_table'" :relation="'orders'" :model="$model" :columns=" [
-                            'id',
-                            'order_number',
-                            'total_amount',
-                            'created_at',
-                            'updated_at',
-                            'status',
-                            'payment_status',
-                            'created_by',
-                            'action',
+                            <x-a-relation-grid :id="'post_table'" :relation="'posts'" :model="$model" :columns=" [
+                             'id',
+                                 'title',
+                                 'category',
+                                 'status',
+                                    'created_at',   
+                                 'created_by',
+                                'action',
                             ]" />
 
 
