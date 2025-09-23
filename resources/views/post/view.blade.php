@@ -12,7 +12,7 @@ use App\Models\User;
             'label' => 'Home',
         ],
         [
-             'url' => 'post',
+             'url' => 'posts',
             'label' => 'Posts',
         ],
         !empty($model->title) ? (strlen($model->title) > 100 ? substr($model->title, 0, 100) . '...' : $model->title) : 'N/A'

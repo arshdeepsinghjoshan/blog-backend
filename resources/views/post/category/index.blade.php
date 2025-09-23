@@ -11,6 +11,11 @@
             'url' => '/',
             'label' => 'Home',
         ],
+        
+        [
+            'url' => 'posts/category',
+            'label' => 'Post Category',
+        ]
 
     ]" />
 
@@ -50,7 +55,7 @@
                 <div class="card-body">
                     <x-a-update-menu-items :model="$model" :action="'index'" />
                     <div class="table-responsive">
-                        <x-a-grid-view :id="'post_category_table'" :model="$model" :url="'post/category/get-list/'" :columns="[
+                        <x-a-grid-view :id="'post_category_table'" :model="$model" :url="'posts/category/get-list/'" :columns="[
                                 'id',
                                 'name',
                                 'status',

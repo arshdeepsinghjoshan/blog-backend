@@ -84,14 +84,14 @@ class PostCategory extends Model
                     'label' => 'fa fa-step-backward',
                     'color' => 'btn btn-primary',
                     'title' => __('Manage'),
-                    'url' => url('post/category'),
+                    'url' => url('posts/category'),
                     'visible' => true
                 ];
                 $menu['delete'] = [
                     'label' => 'fa fa-trash',
                     'color' => 'btn btn-danger',
                     'title' => __('Add'),
-                    'url' =>  url('post/category/delete/' . $model->id),
+                    'url' =>  url('posts/category/delete/' . $model->id),
                     'visible' => true
                 ];
                 break;
@@ -101,7 +101,7 @@ class PostCategory extends Model
                     'label' => 'fa fa-plus',
                     'color' => 'btn btn-icon btn-primary',
                     'title' => __('Add'),
-                    'url' => url('post/category/create'),
+                    'url' => url('posts/category/create'),
                     'visible' => false
                 ];
                 break;

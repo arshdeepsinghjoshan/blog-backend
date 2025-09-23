@@ -250,9 +250,9 @@ class PostController extends Controller
 
             ->addColumn('action', function ($data) {
                 $html = '<div class="table-actions text-center">';
-                $html .=    '  <a class="btn btn-icon btn-primary mt-1" href="' . url('post/view/' . $data->id) . '"  ><i class="fa fa-eye
+                $html .=    '  <a class="btn btn-icon btn-primary mt-1" href="' . url('posts/view/' . $data->id) . '"  ><i class="fa fa-eye
                 "data-toggle="tooltip"  title="View"></i></a>';
-                $html .= ' <a class="btn btn-icon btn-primary mt-1" href="' . url('post/edit/' . $data->id) . '" ><i class="fa fa-edit"></i></a>';
+                $html .= ' <a class="btn btn-icon btn-primary mt-1" href="' . url('posts/edit/' . $data->id) . '" ><i class="fa fa-edit"></i></a>';
                 $html .=  '</div>';
                 return $html;
             })->addColumn('customerClickAble', function ($data) {
@@ -347,10 +347,10 @@ class PostController extends Controller
             $model->slug = Str::slug($request->title, '-');
             // Save the model
             if ($model->save()) {
-                // return redirect('post')->with('success', 'Post created successfully!');
-                return redirect(url('post'))->with('success', 'Post created successfully!');
+                return redirect('posts')->with('success', 'Post created successfully!');
+                // return redirect(url('post'))->with('success', 'Post created successfully!');
             } else {
-                return redirect('/post/create')->with('error', 'Unable to save the Post!');
+                return redirect('/posts/create')->with('error', 'Unable to save the Post!');
             }
         } catch (\Exception $e) {
             $bug = $e->getMessage();

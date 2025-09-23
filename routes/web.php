@@ -128,24 +128,24 @@ Route::group(['middleware' => ['prevent-back-history', 'admin']], function () {
 
 
 
-        Route::get('post/category', [PostCategoryController::class, 'index']);
-        Route::post('post/category/add', [PostCategoryController::class, 'store'])->name('postCategory.add');
-        Route::get('/post/category/get-list', [PostCategoryController::class, 'getDepartmenttList']);
-        Route::get('/post/category/edit/{id}', [PostCategoryController::class, 'edit']);
-        Route::get('/post/category/view/{id}', [PostCategoryController::class, 'view']);
-        Route::post('post/category/update/{id}', [PostCategoryController::class, 'update'])->name('postCategory.update');
-        Route::get('/post/category/stateChange/{id}/{state_id}', [PostCategoryController::class, 'stateChange']);
-        Route::get('/post/category/delete/{id}', [PostCategoryController::class, 'finalDelete']);
+        Route::get('posts/category', [PostCategoryController::class, 'index']);
+        Route::post('posts/category/add', [PostCategoryController::class, 'store'])->name('postCategory.add');
+        Route::get('/posts/category/get-list', [PostCategoryController::class, 'getDepartmenttList']);
+        Route::get('/posts/category/edit/{id}', [PostCategoryController::class, 'edit']);
+        Route::get('/posts/category/view/{id}', [PostCategoryController::class, 'view']);
+        Route::post('posts/category/update/{id}', [PostCategoryController::class, 'update'])->name('postCategory.update');
+        Route::get('/posts/category/stateChange/{id}/{state_id}', [PostCategoryController::class, 'stateChange']);
+        Route::get('/posts/category/delete/{id}', [PostCategoryController::class, 'finalDelete']);
 
 
-        Route::get('post', [PostController::class, 'index']);
-        Route::get('/post/create', [PostController::class, 'create']);
-        Route::post('/post/import', [PostController::class, 'import'])->name('post.import');
-        Route::post('/post/add', [PostController::class, 'add'])->name('post.add');
-        Route::get('/post/get-list', [PostController::class, 'getList']);
-        Route::get('/post/edit/{id}', [PostController::class, 'edit']);
-        Route::get('/post/view/{id}', [PostController::class, 'view']);
-        Route::post('post/update', [PostController::class, 'update'])->name('post.update');
+        Route::get('posts', [PostController::class, 'index']);
+        Route::get('/posts/create', [PostController::class, 'create']);
+        Route::post('/posts/import', [PostController::class, 'import'])->name('post.import');
+        Route::post('/posts/add', [PostController::class, 'add'])->name('post.add');
+        Route::get('/posts/get-list', [PostController::class, 'getList']);
+        Route::get('/posts/edit/{id}', [PostController::class, 'edit']);
+        Route::get('/posts/view/{id}', [PostController::class, 'view']);
+        Route::post('posts/update', [PostController::class, 'update'])->name('post.update');
 
 
 

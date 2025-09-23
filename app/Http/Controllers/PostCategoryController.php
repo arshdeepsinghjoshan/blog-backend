@@ -59,7 +59,7 @@ class PostCategoryController extends Controller
             $model->created_by_id = Auth::user()->id;
             $model->fill($request->all());
             $model->save();
-            return redirect('post/category')->with('success', 'Category created successfully!');
+            return redirect('posts/category')->with('success', 'Category created successfully!');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('error', 'An error occurred: ' . $e->getMessage());
         }
@@ -92,7 +92,7 @@ class PostCategoryController extends Controller
 
                 return view('post.category.view', compact('model'));
             } else {
-                return redirect('post/category')->with('error', 'Category does not exist');
+                return redirect('posts/category')->with('error', 'Category does not exist');
             }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
@@ -106,14 +106,14 @@ class PostCategoryController extends Controller
 
             $model =  PostCategory::find($id);
             if (empty($model)) {
-                return redirect('post/category')->with('error', 'Category does not exist');
+                return redirect('posts/category')->with('error', 'Category does not exist');
             }
             if ($this->validator($request->all(), $id)->fails()) {
                 $message = $this->validator($request->all(), $id)->messages()->first();
                 return redirect()->back()->withInput()->with('error', $message);
             }
             $model->update($request->all());
-            return redirect('post/category')->with('success', 'Category updated  successfully');
+            return redirect('posts/category')->with('success', 'Category updated  successfully');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('error', 'An error occurred while updating department');
         }
@@ -154,8 +154,8 @@ class PostCategoryController extends Controller
             })
             ->addColumn('action', function ($data) {
                 $html = '<div class="table-actions text-center">';
-                $html .= ' <a class="btn btn-icon btn-primary mt-1" href="' . url('post/category/edit/' . $data->id) . '" ><i class="fa fa-edit"></i></a>';
-                $html .=    '  <a class="btn btn-icon btn-primary mt-1" href="' . url('post/category/view/' . $data->id) . '"  ><i class="fa fa-eye
+                $html .= ' <a class="btn btn-icon btn-primary mt-1" href="' . url('posts/category/edit/' . $data->id) . '" ><i class="fa fa-edit"></i></a>';
+                $html .=    '  <a class="btn btn-icon btn-primary mt-1" href="' . url('posts/category/view/' . $data->id) . '"  ><i class="fa fa-eye
                     "data-toggle="tooltip"  name="View"></i></a>';
                 $html .=  '</div>';
                 return $html;
@@ -179,7 +179,6 @@ class PostCategoryController extends Controller
                         foreach ($searchTerms as $term) {
                             $q->where('id', 'like', "%$term%")
                                 ->orWhere('name', 'like', "%$term%")
-                                ->orWhere('description', 'like', "%$term%")
                                 ->orWhere('created_at', 'like', "%$term%")
                                 ->orWhereHas('createdBy', function ($query) use ($term) {
                                     $query->Where('name', 'like', "%$term%");
@@ -215,16 +214,16 @@ class PostCategoryController extends Controller
         try {
             $model = PostCategory::find($id);
             if (!$model) {
-                return redirect('post/category')->with('error', 'Category not found!');
+                return redirect('posts/category')->with('error', 'Category not found!');
             }
             $supportExists = Support::where('department_id', $model->id)->exists();
             if ($supportExists) {
-                return redirect('post/category')->with('error', 'You are not allowed to perform this action!');
+                return redirect('posts/category')->with('error', 'You are not allowed to perform this action!');
             }
             $model->delete();
-            return redirect('post/category')->with('success', 'Category has been deleted successfully!');
+            return redirect('posts/category')->with('success', 'Category has been deleted successfully!');
         } catch (\Exception $e) {
-            return redirect('post/category')->with('error', 'An error occurred while deleting department');
+            return redirect('posts/category')->with('error', 'An error occurred while deleting department');
         }
     }
 }

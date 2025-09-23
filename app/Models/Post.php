@@ -151,14 +151,14 @@ class Post extends Model
                     'label' => 'fa fa-step-backward',
                     'color' => 'btn btn-primary',
                     'title' => __('Manage'),
-                    'url' => url('post'),
+                    'url' => url('posts'),
 
                 ];
                 $menu['update'] = [
                     'label' => 'fa fa-edit',
                     'color' => 'btn btn-primary',
                     'title' => __('Update'),
-                    'url' => url('post/edit/' . $model->id),
+                    'url' => url('posts/edit/' . $model->id),
 
                 ];
                 break;
@@ -167,14 +167,14 @@ class Post extends Model
                     'label' => 'fa fa-plus',
                     'color' => 'btn btn-primary',
                     'title' => __('Add'),
-                    'url' => url('post/create'),
+                    'url' => url('posts/create'),
                     'visible' => User::isAdmin()
                 ];
                 $menu['import'] = [
                     'label' => 'fas fa-file-import',
                     'color' => 'btn btn-primary',
                     'title' => __('File Import'),
-                    'url' => url('post/import'),
+                    'url' => url('posts/import'),
                     'visible' => false
                 ];
         }

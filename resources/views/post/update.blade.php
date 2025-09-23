@@ -8,7 +8,7 @@
             'label' => 'Home',
         ],
         [
-             'url' => 'post',
+             'url' => 'posts',
             'label' => 'Post',
         ],
          $model->title ? (strlen($model->title) > 20 ? substr($model->title, 0, 20) . '...' : $model->title) : 'N/A'

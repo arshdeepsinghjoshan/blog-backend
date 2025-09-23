@@ -90,14 +90,14 @@ $segment2 = request()->segment(2);
 
 
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Post Management</span></li>
-        <li class="menu-item {{ $segment1 == 'post' && $segment2 == 'category' ? 'active' : '' }}">
-            <a href="{{ url('post/category') }}" class="menu-link">
+        <li class="menu-item {{ $segment1 == 'posts' && $segment2 == 'category' ? 'active' : '' }}">
+            <a href="{{ url('posts/category') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Post Category</div>
             </a>
         </li>
-        <li class="menu-item {{ $segment1 == 'post' && $segment2 != 'category' ? 'active' : '' }}">
-            <a href="{{ url('post') }}" class="menu-link">
+        <li class="menu-item {{ $segment1 == 'posts' && $segment2 != 'category' ? 'active' : '' }}">
+            <a href="{{ url('posts') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-file"></i>
                 <div data-i18n="Basic">Posts</div>
             </a>

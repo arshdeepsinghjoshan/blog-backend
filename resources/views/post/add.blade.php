@@ -8,7 +8,7 @@
             'label' => 'Home',
         ],
         [
-            'url' => 'post',
+            'url' => 'posts',
             'label' => 'Post',
         ],
     ]" />
